@@ -1,0 +1,12 @@
+---
+projectId: 6
+errorTypes:
+  - name: TestErrors
+    errorTypeId: 0
+    errorCodes:
+      - errorCode: 1
+        name: RunError
+      - errorCode: 2
+        name: LogsError
+      - errorCode: 3
+        name: UninstallError
