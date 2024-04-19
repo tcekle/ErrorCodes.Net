@@ -1,0 +1,22 @@
+<Project>
+	<PropertyGroup>
+		<Authors>Taylor Ekle</Authors>
+		<Product>ErrorCodes.Net</Product>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
+		<PackageReference Include="MinVer" Version="4.3.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<PropertyGroup>
+    	<CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\ErrorCodes.Net.ruleset</CodeAnalysisRuleSet>
+    	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<Copyright>Copyright © $([System.DateTime]::UtcNow.Year) - Data I/O</Copyright>
+		<Authors>Data I/O Corporation</Authors>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/dataio-corporation/connex-api</RepositoryUrl>
+		<MinVerTagPrefix>v</MinVerTagPrefix>
+		<MinVerDefaultPreReleaseIdentifiers>preview</MinVerDefaultPreReleaseIdentifiers>
+  	</PropertyGroup>
+</Project>
