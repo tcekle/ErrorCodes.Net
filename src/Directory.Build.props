@@ -1,6 +1,5 @@
 <Project>
 	<PropertyGroup>
-		<Authors>Taylor Ekle</Authors>
 		<Product>ErrorCodes.Net</Product>
 	</PropertyGroup>
 
@@ -12,10 +11,9 @@
 	<PropertyGroup>
     	<CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\ErrorCodes.Net.ruleset</CodeAnalysisRuleSet>
     	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<Copyright>Copyright © $([System.DateTime]::UtcNow.Year) - Data I/O</Copyright>
-		<Authors>Data I/O Corporation</Authors>
-		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<RepositoryUrl>https://github.com/dataio-corporation/connex-api</RepositoryUrl>
+		<Authors>Taylor Ekle</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/tcekle/ErrorCodes.Net</RepositoryUrl>
 		<MinVerTagPrefix>v</MinVerTagPrefix>
 		<MinVerDefaultPreReleaseIdentifiers>preview</MinVerDefaultPreReleaseIdentifiers>
   	</PropertyGroup>
