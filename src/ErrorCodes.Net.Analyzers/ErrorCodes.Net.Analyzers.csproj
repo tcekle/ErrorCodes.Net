@@ -25,6 +25,7 @@
         <None Include="$(OutputPath)\ErrorCodes.Net.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false"/>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
         <None Include="$(PkgYamlDotNet)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
+        <None Include="ErrorCodes.Net.Analyzers.props" Pack="true" PackagePath="build" Visible="true" />
         <None Include="../../README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
