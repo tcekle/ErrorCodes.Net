@@ -7,6 +7,8 @@
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <NoWarn>$(NoWarn);NU5128</NoWarn>
+        <PackageDescription>ErrorCodes.Net is a library for generating structured error codes with the format 0x12345678.</PackageDescription>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,6 +25,7 @@
         <None Include="$(OutputPath)\ErrorCodes.Net.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false"/>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
         <None Include="$(PkgYamlDotNet)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
+        <None Include="../../README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <ItemGroup>

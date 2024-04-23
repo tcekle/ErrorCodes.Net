@@ -38,8 +38,20 @@ var buildTask = Task("Build")
     });
   });
 
-var nugetPack = Task("NugetPack")
+var testTask = Task("Test")
   .IsDependentOn(buildTask)
+  .Does(() => {
+    DotNetTest(solutionFolder, 
+      new DotNetTestSettings {
+        NoRestore = true,
+        Configuration = configuration,
+        NoBuild = true,
+        VSTestReportPath = @"artifacts/TestResults.trx",
+      });
+  });
+
+var nugetPack = Task("NugetPack")
+  .IsDependentOn(testTask)
   .Does(() => {
 
     var packSettings = new DotNetPackSettings {
