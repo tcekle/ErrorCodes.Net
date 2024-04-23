@@ -5,7 +5,12 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <ErrorCodesProductId>1</ErrorCodesProductId>
     </PropertyGroup>
+
+    <ItemGroup>
+        <CompilerVisibleProperty Include="ErrorCodesProductId"/>
+    </ItemGroup>
 
     <ItemGroup>
       <AdditionalFiles Include="ErrorCodes.yaml" />

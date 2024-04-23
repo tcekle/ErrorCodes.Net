@@ -1,7 +1,5 @@
 <Project>
     <ItemGroup>
-        <ItemGroup>
-            <CompilerVisibleProperty Include="ErrorCodesSolutionId"/>
-        </ItemGroup>
+        <CompilerVisibleProperty Include="ErrorCodesProductId"/>
     </ItemGroup>
 </Project>

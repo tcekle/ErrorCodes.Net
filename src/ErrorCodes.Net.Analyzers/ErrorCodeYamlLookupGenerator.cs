@@ -12,6 +12,8 @@ using Yaml;
 [Generator]
 public class ErrorCodeYamlLookupGenerator : ISourceGenerator
 {
+    private int _productId = 0;
+    
     public const string GENERATED_FILE_NAME = "ErrorCodeLookup.g.cs";
     
     /// <summary>
@@ -36,6 +38,11 @@ public class ErrorCodeYamlLookupGenerator : ISourceGenerator
     /// </remarks>
     public void Execute(GeneratorExecutionContext context)
     {
+        if(context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.ErrorCodesProductId", out var productIdValue))
+        {
+            int.TryParse(productIdValue, out _productId);
+        }
+        
         var yamlFile = context.AdditionalFiles.FirstOrDefault(f => f.Path.EndsWith("ErrorCodes.yaml") || f.Path.EndsWith("ErrorCodes.yml"));
 
         if (yamlFile is null)
@@ -104,9 +111,9 @@ public class ErrorCodeYamlLookupGenerator : ISourceGenerator
         
         foreach (var errorCode in errorTypeDefinition.ErrorCodes)
         {
-            string formattedValue = $"0x{projectId:X2}{errorTypeDefinition.ErrorTypeId:X2}{errorCode.ErrorCode:X4}";
+            string formattedValue = $"{_productId}x{projectId:X2}{errorTypeDefinition.ErrorTypeId:X2}{errorCode.ErrorCode:X4}";
             
-            classStringBuilder.AppendLineIndented($"public ErrorCodeInfo {errorCode.Name} {{ get; }} = new ErrorCodeInfo(\"{formattedValue}\", 0, {projectId}, {errorTypeDefinition.ErrorTypeId}, {errorCode.ErrorCode});", 2);
+            classStringBuilder.AppendLineIndented($"public ErrorCodeInfo {errorCode.Name} {{ get; }} = new ErrorCodeInfo(\"{formattedValue}\", {_productId}, {projectId}, {errorTypeDefinition.ErrorTypeId}, {errorCode.ErrorCode});", 2);
             classStringBuilder.AppendLine();
         }
         
