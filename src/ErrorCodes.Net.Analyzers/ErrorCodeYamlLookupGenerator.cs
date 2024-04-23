@@ -113,7 +113,7 @@ public class ErrorCodeYamlLookupGenerator : ISourceGenerator
         {
             string formattedValue = $"{_productId}x{projectId:X2}{errorTypeDefinition.ErrorTypeId:X2}{errorCode.ErrorCode:X4}";
             
-            classStringBuilder.AppendLineIndented($"public ErrorCodeInfo {errorCode.Name} {{ get; }} = new ErrorCodeInfo(\"{formattedValue}\", {projectId}, {projectId}, {errorTypeDefinition.ErrorTypeId}, {errorCode.ErrorCode});", 2);
+            classStringBuilder.AppendLineIndented($"public ErrorCodeInfo {errorCode.Name} {{ get; }} = new ErrorCodeInfo(\"{formattedValue}\", {_productId}, {projectId}, {errorTypeDefinition.ErrorTypeId}, {errorCode.ErrorCode});", 2);
             classStringBuilder.AppendLine();
         }
         
