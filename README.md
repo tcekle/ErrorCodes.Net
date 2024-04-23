@@ -14,7 +14,6 @@ Denotes which product the error belongs to. For example:
 
 **Service A** with Product ID of `0` will have the format `0xXXXXXXXX` while **Service B** with a Product ID of `1` will have the format `1xXXXXXXXX`
 
-
 ## Quick Start
 
 1. Install `ErrorCodes.Net.Analyzers` using the NuGet package manager in your IDE or use the following command in the project directory:
@@ -74,3 +73,5 @@ Console.WriteLine(ErrorCodeLookup.TestErrors.UninstallError.FormattedErrorCode);
 0x06000002
 0x06000003
 ```
+
+See the full sample project [here](src/Samples/SampleConsole/)
