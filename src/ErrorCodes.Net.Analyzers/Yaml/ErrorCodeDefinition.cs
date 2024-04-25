@@ -3,7 +3,7 @@
 /// <summary>
 /// Class representing an error code definition.
 /// </summary>
-internal class ErrorCodeDefinition
+public class ErrorCodeDefinition
 {
     /// <summary>
     /// Gets or sets the name of the error code.
