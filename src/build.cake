@@ -6,6 +6,7 @@ var configuration = Argument("configuration", "Release");
 var solutionFolder = ".";
 var outputFolder = "./artifacts";
 var errorCodeNetProject = System.IO.Path.Combine(solutionFolder, @"ErrorCodes.Net.Analyzers\ErrorCodes.Net.Analyzers.csproj");
+var errorCodeCliProject = System.IO.Path.Combine(solutionFolder, @"errorcodes-net-cli\errorcodes-net-cli.csproj");
 var helpLocation = "../docs/help";
 
 var cleanTask = Task("Clean")
@@ -63,6 +64,9 @@ var nugetPack = Task("NugetPack")
 
     // ErrorCodes.Net.Analyzers nuget package
     DotNetPack(errorCodeNetProject, packSettings);
+
+    // errorcodes-net-cli nuget package
+    DotNetPack(errorCodeCliProject, packSettings);
   });
 
   // Set default task to run
