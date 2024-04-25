@@ -5,7 +5,7 @@ namespace ErrorCodes.Net.Analyzers.Yaml;
 /// <summary>
 /// Class representing a collection of <see cref="ErrorTypeDefinition"/>.
 /// </summary>
-internal class ErrorTypeCollection
+public class ErrorTypeCollection
 {
     /// <summary>
     /// Gets or sets the project ID for the error type collection.

@@ -1,0 +1,21 @@
+---
+projectId: 1
+errorTypes:
+  - name: ValidateCommand
+    errorTypeId: 0
+    errorCodes:
+      - errorCode: 1
+        name: MsBuildInstanceNotFound
+      - errorCode: 2
+        name: SolutionNotFound
+      - errorCode: 3
+        name: ErrorCodeInfoTypeNotFound
+      - errorCode: 4
+        name: ConstructorParameterNotFound
+      - errorCode: 5
+        name: UnknownValidationType
+  - name: UniquenessCheck
+    errorTypeId: 1
+    errorCodes:
+      - errorCode: 1
+        name: InvalidFormattedErrorParameter

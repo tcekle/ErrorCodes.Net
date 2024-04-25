@@ -29,14 +29,14 @@ Denotes which product the error belongs to. For example:
     ---
     projectId: 6
     errorTypes:
-    - name: TestErrors
+      - name: TestErrors
         errorTypeId: 0
         errorCodes:
-        - errorCode: 1
+          - errorCode: 1
             name: RunError
-        - errorCode: 2
+          - errorCode: 2
             name: LogsError
-        - errorCode: 3
+          - errorCode: 3
             name: UninstallError
     ```
 4. Set the build action for the new file to `C# analyzer additional file` in Visual Studio or `AdditionalFiles` in Rider.
