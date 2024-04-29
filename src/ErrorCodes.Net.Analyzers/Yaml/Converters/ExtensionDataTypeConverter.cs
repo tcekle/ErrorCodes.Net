@@ -6,8 +6,14 @@ using YamlDotNet.Serialization;
 
 namespace ErrorCodes.Net.Analyzers.Yaml.Converters;
 
+/// <summary>
+/// Class implementing an <see cref="IYamlTypeConverter"/> for creating extension data
+/// </summary>
 public class ExtensionDataTypeConverter : IYamlTypeConverter
 {
+    /// <summary>
+    /// Gets an instance of the <see cref="ExtensionDataTypeConverter"/>
+    /// </summary>
     public static readonly IYamlTypeConverter Instance = new ExtensionDataTypeConverter();
     
     /// <summary>
@@ -23,11 +29,6 @@ public class ExtensionDataTypeConverter : IYamlTypeConverter
     {
         ErrorCodeDefinition result = new ErrorCodeDefinition();
         parser.Consume<MappingStart>();
-        
-        // switch (parser.)
-        // {
-        //     
-        // }
 
         while (true)
         {
@@ -61,8 +62,6 @@ public class ExtensionDataTypeConverter : IYamlTypeConverter
     
     private void ReadScalar(IParser parser, Scalar scalar, ErrorCodeDefinition result)
     {
-        // var value = parser.Consume<Scalar>();
-
         switch (scalar.Value)
         {
             case "name":
@@ -75,7 +74,6 @@ public class ExtensionDataTypeConverter : IYamlTypeConverter
                 result.ExtensionData[scalar.Value] = ReadValue(parser);
                 break;
         }
-        
     }
     
     private uint ConvertToUInt32(string value)
@@ -94,7 +92,8 @@ public class ExtensionDataTypeConverter : IYamlTypeConverter
         {
             return scalar.Value;
         }
-        else if (parser.TryConsume<SequenceStart>(out _))
+        
+        if (parser.TryConsume<SequenceStart>(out _))
         {
             var result = new Dictionary<string, object>();
             parser.Consume<MappingStart>();
@@ -108,9 +107,7 @@ public class ExtensionDataTypeConverter : IYamlTypeConverter
             parser.Consume<SequenceEnd>();
             return result;
         }
-        else
-        {
-            throw new InvalidOperationException("Unexpected YAML token.");
-        }
+        
+        throw new InvalidOperationException("Unexpected YAML token.");
     }
 }
