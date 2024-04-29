@@ -79,7 +79,7 @@ internal static class DocfxGenerator
         return $"""
                 # Error Codes
                 
-                Below are the list of errors that you may see while using the PSV software.
+                Below are the list of errors that you may see while using the software.
                 
                 {entryBuilder}
                 """;
