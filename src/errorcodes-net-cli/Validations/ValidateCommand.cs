@@ -7,6 +7,7 @@ namespace errorcodes_net_cli.Validations;
 
 using Extensions;
 using Interfaces;
+using ProgressReporters;
 using Validators;
 
 /// <summary>
@@ -16,8 +17,7 @@ internal class ValidateCommand : ICliCommand
 {
     private enum ValidationType
     {
-        CheckUniqueness,
-        Test
+        CheckUniqueness
     }
     
     /// <summary>

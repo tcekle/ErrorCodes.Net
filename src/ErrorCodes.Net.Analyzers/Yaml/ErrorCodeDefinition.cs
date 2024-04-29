@@ -1,4 +1,6 @@
-﻿namespace ErrorCodes.Net.Analyzers.Yaml;
+﻿using System.Collections.Generic;
+
+namespace ErrorCodes.Net.Analyzers.Yaml;
 
 /// <summary>
 /// Class representing an error code definition.
@@ -14,4 +16,9 @@ public class ErrorCodeDefinition
     /// Gets or sets the error code value.
     /// </summary>
     public uint ErrorCode { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the data nodes that are not part of the standard definition.
+    /// </summary>
+    public Dictionary<string, object> ExtensionData { get; set; } = new();
 }
