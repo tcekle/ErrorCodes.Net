@@ -7,6 +7,8 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace ErrorCodes.Net.Analyzers;
 
+using Yaml.Converters;
+
 using Yaml;
 
 [Generator]
@@ -54,6 +56,7 @@ public class ErrorCodeYamlLookupGenerator : ISourceGenerator
         
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .WithTypeConverter(ExtensionDataTypeConverter.Instance)
             .Build();
             
         var errorCodeDefinitions = deserializer.Deserialize<ErrorTypeCollection>(content.ToString());

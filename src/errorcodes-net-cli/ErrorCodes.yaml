@@ -19,3 +19,8 @@ errorTypes:
     errorCodes:
       - errorCode: 1
         name: InvalidFormattedErrorParameter
+  - name: GenerateCommand
+    errorTypeId: 2
+    errorCodes:
+      - errorCode: 1
+        name: UnknownGenerationType

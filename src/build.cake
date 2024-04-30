@@ -24,9 +24,20 @@ var restoreTask = Task("Restore")
     DotNetRestore(solutionFolder);
   });
 
+var validateErrorsTask = Task("ValidateErrors")
+  .Does(() => {
+    var result = StartProcess("dotnet", $"errorcode-net-cli validate --solution {solutionFolder}\\ErrorCodes.Net.sln --validation-type CheckUniqueness");
+
+    if (result != 0)
+    {
+      throw new Exception("Error validating error codes");
+    }
+  });
+
 var buildTask = Task("Build")
   .IsDependentOn(cleanTask)
   .IsDependentOn(restoreTask)
+  .IsDependentOn(validateErrorsTask)
   .Does(() => {
     // ErrorCodes.Net solution
     DotNetBuild(solutionFolder, new DotNetBuildSettings{

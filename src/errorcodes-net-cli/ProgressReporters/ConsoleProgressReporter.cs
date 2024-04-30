@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.MSBuild;
 
-namespace errorcodes_net_cli.Validations;
+namespace errorcodes_net_cli.ProgressReporters;
 
 /// <summary>
 /// Class representing a console progress reporter

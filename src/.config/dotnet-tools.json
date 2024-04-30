@@ -7,6 +7,12 @@
         "commands": [
           "dotnet-cake"
         ]
+      },
+      "errorcodes-net-cli": {
+        "version": "0.1.1-preview.7",
+        "commands": [
+          "errorcode-net-cli"
+        ]
       }
     }
   }

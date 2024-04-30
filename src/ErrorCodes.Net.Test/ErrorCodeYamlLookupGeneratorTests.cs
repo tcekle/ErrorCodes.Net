@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ErrorCodes.Net.Test;
 
-using VerifyJsonCS = CSharpSourceGeneratorVerifier<ErrorCodeYamlLookupGenerator>;
+using VerifyYamlCS = CSharpSourceGeneratorVerifier<ErrorCodeYamlLookupGenerator>;
 
 [TestClass]
 public class ErrorCodeYamlLookupGeneratorTests
@@ -12,7 +12,7 @@ public class ErrorCodeYamlLookupGeneratorTests
     [TestMethod]
     public async Task ErrorCodeLookupGenerator_MultipleEnumValues_CompilesCorrectly()
     {
-        var json = """
+        var yaml = """
                    ---
                    projectId: 1
                    errorTypes:
@@ -64,13 +64,13 @@ public class ErrorCodeYamlLookupGeneratorTests
                         #endregion
                         """;
 
-        await RunTest(json, generated);
+        await RunTest(yaml, generated);
     }
     
     [TestMethod]
     public async Task ErrorCodeLookupGenerator_SingleEnumValue_CompilesCorrectly()
     {
-        var json = """
+        var yaml = """
                    ---
                    projectId: 1
                    errorTypes:
@@ -119,13 +119,13 @@ public class ErrorCodeYamlLookupGeneratorTests
                         #endregion
                         """;
 
-        await RunTest(json, generated);
+        await RunTest(yaml, generated);
     }
     
     [TestMethod]
     public async Task ErrorCodeLookupGenerator_MultipleEnumTypes_CompilesCorrectly()
     {
-        var json = """
+        var yaml = """
                    ---
                    projectId: 1
                    errorTypes:
@@ -187,13 +187,13 @@ public class ErrorCodeYamlLookupGeneratorTests
                         #endregion
                         """;
 
-        await RunTest(json, generated);
+        await RunTest(yaml, generated);
     }
     
     [TestMethod]
     public async Task ErrorCodeLookupGenerator_EnumsWithSummary_AddsSummaryToGeneratedClass()
     {
-        var json = """
+        var yaml = """
                    ---
                    projectId: 1
                    errorTypes:
@@ -243,13 +243,13 @@ public class ErrorCodeYamlLookupGeneratorTests
                         #endregion
                         """;
 
-        await RunTest(json, generated);
+        await RunTest(yaml, generated);
     }
     
     [TestMethod]
-    public async Task JsonErrorCodeLookupGenerator_MultipleEnumValues_CompilesCorrectly()
+    public async Task YamlErrorCodeLookupGenerator_MultipleEnumValues_CompilesCorrectly()
     {
-        var json = """
+        var yaml = """
                    ---
                    projectId: 1
                    errorTypes:
@@ -302,18 +302,18 @@ public class ErrorCodeYamlLookupGeneratorTests
                         #endregion
                         """;
 
-        await RunTest(json, generated);
+        await RunTest(yaml, generated);
     }
     
-    private Task RunTest(string json, string generated)
+    private Task RunTest(string yaml, string generated)
     {
-        return new VerifyJsonCS.Test
+        return new VerifyYamlCS.Test
         {
             TestState = 
             {
                 AdditionalFiles =
                 {
-                    ("ErrorCodes.yaml", json)
+                    ("ErrorCodes.yaml", yaml)
                 },
                 GeneratedSources =
                 {
