@@ -28,6 +28,7 @@ Denotes which product the error belongs to. For example:
     ```yaml
     ---
     projectId: 6
+    namespace: ErrorCodes.Net.Generated
     errorTypes:
       - name: TestErrors
         errorTypeId: 0
@@ -60,7 +61,7 @@ Example top-level console application:
 
 **Program.cs**
 ```csharp
-using ErrorCodes.Net.Generated;
+using SampleConsole;
 
 Console.WriteLine(ErrorCodeLookup.TestErrors.RunError.FormattedErrorCode);
 Console.WriteLine(ErrorCodeLookup.TestErrors.LogsError.FormattedErrorCode);
@@ -69,9 +70,9 @@ Console.WriteLine(ErrorCodeLookup.TestErrors.UninstallError.FormattedErrorCode);
 
 **Output**
 ```pwsh
-0x06000001
-0x06000002
-0x06000003
+1x06000001
+1x06000002
+1x06000003
 ```
 
 See the full sample project [here](src/Samples/SampleConsole/)

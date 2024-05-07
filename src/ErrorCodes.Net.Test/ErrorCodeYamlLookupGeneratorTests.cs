@@ -1,6 +1,8 @@
 using ErrorCodes.Net.Analyzers;
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
+using ErrorCodes.Net.Analyzers.DiagnosticErrors;
+using Microsoft.CodeAnalysis.Testing;
 
 namespace ErrorCodes.Net.Test;
 
@@ -15,6 +17,7 @@ public class ErrorCodeYamlLookupGeneratorTests
         var yaml = """
                    ---
                    projectId: 1
+                   namespace: ErrorCodes.Net.Generated
                    errorTypes:
                    - name: TestEnum
                      errorTypeId: 2
@@ -73,6 +76,7 @@ public class ErrorCodeYamlLookupGeneratorTests
         var yaml = """
                    ---
                    projectId: 1
+                   namespace: ErrorCodes.Net.Generated
                    errorTypes:
                    - name: TestEnum
                      errorTypeId: 2
@@ -128,6 +132,7 @@ public class ErrorCodeYamlLookupGeneratorTests
         var yaml = """
                    ---
                    projectId: 1
+                   namespace: ErrorCodes.Net.Generated
                    errorTypes:
                    - name: TestEnum
                      errorTypeId: 2
@@ -196,6 +201,7 @@ public class ErrorCodeYamlLookupGeneratorTests
         var yaml = """
                    ---
                    projectId: 1
+                   namespace: ErrorCodes.Net.Generated
                    errorTypes:
                    - name: TestEnum
                      errorTypeId: 2
@@ -252,6 +258,7 @@ public class ErrorCodeYamlLookupGeneratorTests
         var yaml = """
                    ---
                    projectId: 1
+                   namespace: ErrorCodes.Net.Generated
                    errorTypes:
                    - name: TestEnum
                      errorTypeId: 2
@@ -260,7 +267,6 @@ public class ErrorCodeYamlLookupGeneratorTests
                        name: TestError
                      - errorCode: 2
                        name: TestError2
-                   
                    """;
 
         var generated = """
@@ -305,21 +311,55 @@ public class ErrorCodeYamlLookupGeneratorTests
         await RunTest(yaml, generated);
     }
     
-    private Task RunTest(string yaml, string generated)
+    [TestMethod]
+    public async Task YamlErrorCodeLookupGenerator_NoNamespace_GivesError0001()
     {
-        return new VerifyYamlCS.Test
+        var yaml = """
+                   ---
+                   projectId: 1
+                   errorTypes:
+                   - name: TestEnum
+                     errorTypeId: 2
+                     errorCodes:
+                     - errorCode: 1
+                       name: TestError
+                     - errorCode: 2
+                       name: TestError2
+                   """;
+        
+        var expectedDiagnostic = new DiagnosticResult(YamlDiagnosticErrors.MissingNamespaceDescriptor);
+        expectedDiagnostic = expectedDiagnostic.WithLocation("ErrorCodes.yaml", 1, 1);
+
+        await RunTest(yaml, string.Empty, [expectedDiagnostic]);
+    }
+    
+    private Task RunTest(string yaml, string generated, List<DiagnosticResult>? diagnosticResults = null)
+    {
+        var validator = new VerifyYamlCS.Test
         {
             TestState = 
             {
                 AdditionalFiles =
                 {
                     ("ErrorCodes.yaml", yaml)
-                },
-                GeneratedSources =
-                {
-                    (typeof(ErrorCodeYamlLookupGenerator), ErrorCodeYamlLookupGenerator.GENERATED_FILE_NAME, SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha256)),
                 }
             }
-        }.RunAsync();
+        };
+
+        if (!string.IsNullOrEmpty(generated))
+        {
+            validator.TestState.GeneratedSources.Add(
+                (typeof(ErrorCodeYamlLookupGenerator), 
+                    ErrorCodeYamlLookupGenerator.GENERATED_FILE_NAME,
+                    SourceText.From(generated, Encoding.UTF8,
+                        SourceHashAlgorithm.Sha256)));
+        }
+
+        if (diagnosticResults is not null)
+        {
+            validator.ExpectedDiagnostics.AddRange(diagnosticResults);
+        }
+        
+        return validator.RunAsync();
     }
 }
