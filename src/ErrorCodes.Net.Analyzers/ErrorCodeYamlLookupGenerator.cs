@@ -7,8 +7,8 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace ErrorCodes.Net.Analyzers;
 
+using DiagnosticErrors;
 using Yaml.Converters;
-
 using Yaml;
 
 [Generator]
@@ -61,6 +61,13 @@ public class ErrorCodeYamlLookupGenerator : ISourceGenerator
             
         var errorCodeDefinitions = deserializer.Deserialize<ErrorTypeCollection>(content.ToString());
 
+        if (string.IsNullOrEmpty(errorCodeDefinitions.Namespace))
+        {
+            context.ReportDiagnostic(Diagnostic.Create(YamlDiagnosticErrors.MissingNamespaceDescriptor,
+                Location.Create(yamlFile.Path, new TextSpan(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero))));
+            return;
+        }
+
         string classesSection = CreateEnumClasses(errorCodeDefinitions);
         
          var result = $$"""
@@ -77,7 +84,7 @@ public class ErrorCodeYamlLookupGenerator : ISourceGenerator
                 using System.Collections.Generic;
                 using ErrorCodes.Net;
 
-                namespace ErrorCodes.Net.Generated
+                namespace {{errorCodeDefinitions.Namespace}}
                 {
 
                 {{classesSection}}

@@ -1,4 +1,4 @@
-﻿using ErrorCodes.Net.Generated;
+﻿using SampleConsole;
 
 Console.WriteLine(ErrorCodeLookup.TestErrors.RunError.FormattedErrorCode);
 Console.WriteLine(ErrorCodeLookup.TestErrors.LogsError.FormattedErrorCode);

@@ -13,6 +13,11 @@ public class ErrorTypeCollection
     public uint ProjectId { get; set; }
     
     /// <summary>
+    /// Gets or sets the namespace for generated error types.
+    /// </summary>
+    public string Namespace { get; set; }
+    
+    /// <summary>
     /// Gets or sets a <see cref="List{T}"/> of <see cref="ErrorTypeDefinition"/>
     /// </summary>
     public List<ErrorTypeDefinition> ErrorTypes { get; set; }

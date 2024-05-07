@@ -1,5 +1,6 @@
 ---
 projectId: 6
+namespace: SampleConsole
 errorTypes:
   - name: TestErrors
     errorTypeId: 0

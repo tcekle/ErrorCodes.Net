@@ -1,5 +1,4 @@
 ﻿using System.CommandLine;
-using ErrorCodes.Net.Generated;
 using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis.MSBuild;
 
