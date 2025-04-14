@@ -1,78 +1,121 @@
-# ErrorCodes.Net
+# 🛠️ ErrorCodes.Net
 
-ErrorCodes.Net is a library for generating structured error codes with the format `0x12345678`.
+**ErrorCodes.Net** is a .NET library and Roslyn analyzer that helps you define and manage structured, traceable error codes across your applications.
 
-How the value is broken down:
+It enforces a consistent format:
 
-| `0x`       | `12`       | `34`       | `5678`     |
-|------------|------------|------------|------------|
-| Product ID | Project ID | Error Type | Error Code |
+```
+0xPPMMTTTT
+```
 
-### Product ID
+Where:
 
-Denotes which product the error belongs to. For example:
+- `PP` = Product ID (e.g., `00` for Service A, `01` for Service B)
+- `MM` = Project ID (e.g., `06`)
+- `TT` = Error Type ID
+- `TT` = Error Code
 
-**Service A** with Product ID of `0` will have the format `0xXXXXXXXX` while **Service B** with a Product ID of `1` will have the format `1xXXXXXXXX`
+This structure ensures that each error code is unique, traceable, and easy to interpret.
 
-## Quick Start
+## 🚀 Features
 
-1. Install `ErrorCodes.Net.Analyzers` using the NuGet package manager in your IDE or use the following command in the project directory:
-    ```pwsh
-    PS C:\YOURSRC> dotnet add package ErrorCodes.Net.Analyzers
-    ```
-2. In the project file, make sure to add the `PrivateAssets="all"` to the package:
-    ```xml
-    <PackageReference Include="ErrorCodes.Net.Analyzers" PrivateAssets="all" />
-    ```
-3. Create a file in your project with the name `ErrorCodes.yaml` or `ErrorCodes.yml` and fill it with an example:
-    ```yaml
-    ---
-    projectId: 6
-    namespace: ErrorCodes.Net.Generated
-    errorTypes:
-      - name: TestErrors
-        errorTypeId: 0
-        errorCodes:
-          - errorCode: 1
-            name: RunError
-          - errorCode: 2
-            name: LogsError
-          - errorCode: 3
-            name: UninstallError
-    ```
-4. Set the build action for the new file to `C# analyzer additional file` in Visual Studio or `AdditionalFiles` in Rider.
-5. Rebuild the project.
+- ✅ Enforces consistent error code formatting via Roslyn analyzers  
+- ✅ YAML-based configuration for defining error codes  
+- ✅ Supports multiple error types per project  
+- ✅ Generates C# code for defined error codes  
+- ✅ Integrates seamlessly with your build process  
 
-If the rebuild was successful, you should be able to reference the error codes in the following way:
+## ⬇️ Installation
+
+Install the analyzer via NuGet:
+
+```bash
+dotnet add package ErrorCodes.Net.Analyzers
+```
+
+In your .csproj file, ensure the package is referenced with PrivateAssets="all" to prevent it from being exposed to consumers:
+
+```xml
+<PackageReference Include="ErrorCodes.Net.Analyzers" PrivateAssets="all" />
+```
+
+## ⚙️ Configuration
+
+Create an `ErrorCodes.yaml` or `ErrorCodes.yml` file in your project root with the following structure:
+
+```yaml
+projectId: 6
+namespace: ErrorCodes.Net.Generated
+errorTypes:
+  - name: TestErrors
+    errors:
+      - code: 1
+        name: InvalidInput
+      - code: 2
+        name: NotFound
+```
+
+This configuration defines the project ID, the namespace for the generated code, and a list of error types with their corresponding error codes and messages.
+
+## 🧪 Example Usage
+
+Once configured, the analyzer will generate a static class with your error codes.
+
+Make sure to include the YAML file in your `.csproj` so the analyzer can find it:
+
+```xml
+<ItemGroup>
+  <AdditionalFiles Include="ErrorCodes.yaml" />
+</ItemGroup>
+```
+
+Then you can use the generated error codes like this:
 
 ```csharp
-string error = ErrorCodeLookup.TestErrors.RunError.FormattedErrorCode;
+using ErrorCodes.Net.Generated;
+
+public class Example
+{
+    public void DoSomething()
+    {
+        var errorCode = ErrorCodeLookup.TestErrors.InvalidInput;
+        Console.WriteLine(errorCode); // Outputs: 0x06010001
+    }
+}
 ```
 
-For the above example file, the results of the `FormatedErrorCode` are:
+See a full sample project [here](src/Samples/SampleConsole/).
 
-| Name           | Formatted output |
-|----------------|------------------|
-| RunError       | 0x060001         |
-| LogsError      | 0x060002         |
-| UninstallError | 0x060003         |
+## 🧰 Advanced Usage
 
-Example top-level console application:
+You can define multiple error types within the same project:
 
-**Program.cs**
-```csharp
-using SampleConsole;
-
-Console.WriteLine(ErrorCodeLookup.TestErrors.RunError.FormattedErrorCode);
-Console.WriteLine(ErrorCodeLookup.TestErrors.LogsError.FormattedErrorCode);
-Console.WriteLine(ErrorCodeLookup.TestErrors.UninstallError.FormattedErrorCode);
+```yaml
+projectId: 6
+namespace: ErrorCodes.Net.Generated
+errorTypes:
+  - name: ValidationErrors
+    errors:
+      - code: 1
+        name: MissingField
+  - name: DatabaseErrors
+    errors:
+      - code: 1
+        name: ConnectionFailed
 ```
 
-**Output**
-```pwsh
-1x06000001
-1x06000002
-1x06000003
-```
+This will generate separate classes for each error type, such as `ValidationErrors` and `DatabaseErrors`, each containing their respective error codes.
 
-See the full sample project [here](src/Samples/SampleConsole/)
+## 📦 NuGet Package
+
+The analyzer is available on NuGet:
+
+[ErrorCodes.Net.Analyzers on NuGet](https://www.nuget.org/packages/ErrorCodes.Net.Analyzers)
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
