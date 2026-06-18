@@ -21,17 +21,25 @@ public static class CompilationExtensions
 
         if (namespaceNames.Length == 0)
         {
-            return compilation.GlobalNamespace.GetAllTypes(new CancellationToken()).First(n => n.Name == className);
+            return compilation.GlobalNamespace.GetAllTypes(new CancellationToken()).FirstOrDefault(n => n.Name == className);
         }
 
         var namespaces = compilation.GlobalNamespace.GetNamespaceMembers();
         INamespaceSymbol? namespaceContainingType = null;
         foreach (var name in namespaceNames)
         {
-            namespaceContainingType = namespaces.First(n => n.Name == name);
+            // A compilation that does not reference the searched type will be missing the
+            // namespace entirely (for example, projects that do not use ErrorCodes.Net).
+            // Treat that as "not found" rather than throwing so callers can skip the project.
+            namespaceContainingType = namespaces.FirstOrDefault(n => n.Name == name);
+            if (namespaceContainingType is null)
+            {
+                return null;
+            }
+
             namespaces = namespaceContainingType.GetNamespaceMembers();
         }
 
-        return namespaceContainingType?.GetAllTypes(new CancellationToken()).First(n => n.Name == className);
+        return namespaceContainingType?.GetAllTypes(new CancellationToken()).FirstOrDefault(n => n.Name == className);
     }
 }
